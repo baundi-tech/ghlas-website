@@ -1,0 +1,154 @@
+/* app/globals.css - Tailwind CSS v4 */
+@import 'tailwindcss';
+@import 'leaflet/dist/leaflet.css';
+
+/* Custom theme configuration */
+@theme {
+  /* Brand Colors */
+  --color-brand-darkForest: #3A5A3A;
+  --color-brand-deepCanopy: #1B2A1B;
+  --color-brand-forest: #2C5F2D;
+  --color-brand-shadow: #2A3D2A;
+  --color-brand-leaf: #4A9B4F;
+  --color-brand-sage: #90B090;
+  --color-brand-muted: #6B7B6B;
+  
+  /* Neutral Colors */
+  --color-neutral-white: #FFFFFF;
+  --color-neutral-paleMint: #EAF0EA;
+  --color-neutral-coolGray: #D0D8D0;
+  --color-neutral-lightGray: #D0D0D0;
+  --color-neutral-warmCream: #F5F0E8;
+  --color-neutral-nearBlack: #2D2D2D;
+  --color-neutral-black: #000000;
+  
+  /* Accent Colors */
+  --color-accent-golden: #C7943E;
+  --color-accent-darkGold: #8B6914;
+  --color-accent-yellow: #FFC000;
+  --color-accent-orange: #ED7D31;
+  --color-accent-alert: #C0392B;
+  --color-accent-brown: #5D4037;
+  --color-accent-link: #1565C0;
+  
+  /* Font Family */
+  --font-family-sans: Inter, system-ui, sans-serif;
+  
+  /* Animations */
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-mesh-pulse: meshPulse 4s ease-in-out infinite;
+}
+
+/* Custom Keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes meshPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+/* Custom Components */
+@layer components {
+  .btn-primary {
+    background-color: var(--color-brand-darkForest);
+    color: white;
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--color-brand-forest);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-secondary {
+    border: 2px solid var(--color-brand-darkForest);
+    color: var(--color-brand-darkForest);
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--color-brand-darkForest);
+    color: white;
+  }
+  
+  .btn-accent {
+    background-color: var(--color-accent-golden);
+    color: var(--color-brand-deepCanopy);
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+  }
+  
+  .btn-accent:hover {
+    background-color: var(--color-accent-darkGold);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card {
+    background-color: var(--color-neutral-white);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: box-shadow 0.3s;
+  }
+  
+  .card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--color-neutral-coolGray);
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: var(--color-brand-leaf);
+    box-shadow: 0 0 0 2px rgba(74, 155, 79, 0.2);
+  }
+  
+  .label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-brand-darkForest);
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Utility Classes */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-accent-golden), var(--color-accent-orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .bg-gradient-brand {
+    background: linear-gradient(135deg, var(--color-brand-darkForest), var(--color-brand-forest));
+  }
+}
