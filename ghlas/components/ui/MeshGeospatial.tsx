@@ -54,33 +54,7 @@ export function MeshGeospatial({ region }: MeshGeospatialProps) {
       ctx.strokeStyle = 'rgba(144, 176, 144, 0.3)'
       ctx.lineWidth = 1.5
 
-      // Draw horizontal lines
-      for (let i = 0; i <= cols; i++) {
-        ctx.beginPath()
-        for (let j = 0; j <= rows; j++) {
-          const x = i * cellW
-          const y = j * cellH
-          const noise = Math.sin(time + i * 0.3) * Math.cos(time + j * 0.3) * 8
-          const noise2 = Math.sin(time * 0.8 + i * 0.2) * 3
-          if (j === 0) ctx.moveTo(x + noise2, y + noise)
-          else ctx.lineTo(x + noise2, y + noise)
-        }
-        ctx.stroke()
-      }
-
-      // Draw vertical lines
-      for (let j = 0; j <= rows; j++) {
-        ctx.beginPath()
-        for (let i = 0; i <= cols; i++) {
-          const x = i * cellW
-          const y = j * cellH
-          const noise = Math.sin(time + i * 0.3) * Math.cos(time + j * 0.3) * 8
-          const noise2 = Math.sin(time * 0.8 + j * 0.2) * 3
-          if (i === 0) ctx.moveTo(x + noise, y + noise2)
-          else ctx.lineTo(x + noise, y + noise2)
-        }
-        ctx.stroke()
-      }
+     
 
       // Draw locations with pulsing effects
       locations.forEach((loc) => {
