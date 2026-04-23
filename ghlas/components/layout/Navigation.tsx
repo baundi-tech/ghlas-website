@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
-import { Search, LayoutDashboard, FileText, LogIn, Menu, X, ChevronRight } from 'lucide-react'
+import { Search, LayoutDashboard, FileText, LogIn, Menu, X, ChevronRight, Home } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
+  { href: '/',          label: 'Home',           icon: Home },
   { href: '/search',    label: 'Search Parcels', icon: Search },
   { href: '/register',  label: 'Register Land',  icon: FileText },
   { href: '/dashboard', label: 'Dashboard',       icon: LayoutDashboard },
@@ -20,14 +21,14 @@ function DesktopNav({ pathname, scrolled }: { pathname: string; scrolled: boolea
     <div
       className={`hidden md:flex items-center justify-between h-16 px-8 transition-all duration-300 ${
         scrolled
-          ? 'bg-brand-deepCanopy/80 backdrop-blur-xl shadow-[0_1px_40px_rgba(0,0,0,0.4)] border-b border-white/8'
+          ? 'bg-brand-deepCanopy/60 backdrop-blur-xl shadow-[0_1px_40px_rgba(0,0,0,0.4)] border-b border-white/8'
           : 'bg-transparent'
       }`}
     >
       {/* Left — Logo */}
       <Link href="/" className="flex-shrink-0">
         <Image
-          src="/images/logo.svg"
+          src="/images/logo.png"
           alt="GHLAS"
           width={140}
           height={36}
@@ -38,39 +39,55 @@ function DesktopNav({ pathname, scrolled }: { pathname: string; scrolled: boolea
       {/* Right — Nav links + CTA */}
       <div className="flex items-center gap-1">
         {navLinks.map(({ href, label, icon: Icon }) => {
-          const active = pathname === href
+          const active = href === '/' ? pathname === '/' : pathname === href
           return (
             <Link
               key={href}
               href={href}
               className={`group relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 active
-                  ? 'text-accent-golden bg-white/8'
-                  : 'text-white/70 hover:text-white hover:bg-white/6'
+                  ? 'text-accent-golden font-semibold'
+                  : scrolled
+                  ? 'text-white/70 hover:text-white hover:bg-white/6'
+                  : 'text-green-900 hover:text-black hover:bg-black/6'
               }`}
             >
               <Icon
                 className={`w-4 h-4 transition-colors ${
-                  active ? 'text-accent-golden' : 'text-white/50 group-hover:text-white/80'
+                  active
+                    ? 'text-accent-golden'
+                    : scrolled
+                    ? 'text-white/50 group-hover:text-white/80'
+                    : 'text-green-900 group-hover:text-black/80'
                 }`}
               />
               {label}
               {active && (
-                <motion.span
-                  layoutId="nav-pill"
-                  className="absolute inset-0 rounded-lg bg-white/8 -z-10"
-                  transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                />
+                <>
+                  {/* sliding underline */}
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-accent-golden"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
+                  {/* pulse glow */}
+                  <motion.span
+                    className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-accent-golden"
+                    animate={{ opacity: [0.6, 1, 0.6], scaleX: [0.85, 1, 0.85] }}
+                    transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+                    style={{ filter: 'blur(3px)' }}
+                  />
+                </>
               )}
             </Link>
           )
         })}
 
-        <div className="w-px h-5 bg-white/15 mx-3" />
+        
 
         <Link
           href="/login"
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-brand-deepCanopy bg-accent-golden hover:bg-accent-yellow transition-all duration-200 shadow-[0_0_20px_rgba(199,148,62,0.3)] hover:shadow-[0_0_28px_rgba(199,148,62,0.5)]"
+          className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white bg-green-800 hover:bg-accent-yellow transition-all duration-200 hover:translate-y-[-2px]"
         >
           <LogIn className="w-4 h-4" />
           Sign In
@@ -110,13 +127,13 @@ function MobileNav({ pathname }: { pathname: string }) {
       {/* Top bar — always visible on mobile */}
       <div className="flex md:hidden items-center justify-between h-16 px-5 bg-brand-deepCanopy/85 backdrop-blur-xl border-b border-white/8 relative z-50">
         <Link href="/" onClick={() => setOpen(false)}>
-          <Image src="/images/logo.svg" alt="GHLAS" width={120} height={32} priority />
+          <Image src="/images/logo.png" alt="GHLAS" width={120} height={32} priority />
         </Link>
 
         <button
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
-          className="relative z-50 w-10 h-10 flex items-center justify-center rounded-full text-white transition-colors"
+          className="relative z-50 w-15 h-15 flex items-center justify-center rounded-full text-white transition-colors"
         >
           <AnimatePresence mode="wait" initial={false}>
             {open ? (
@@ -155,9 +172,7 @@ function MobileNav({ pathname }: { pathname: string }) {
             transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
             className="md:hidden fixed inset-0 z-40 bg-brand-deepCanopy flex flex-col"
           >
-            {/* Subtle decorative circle */}
-            <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-accent-golden/5 blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 -left-20 w-72 h-72 rounded-full bg-brand-forest/30 blur-3xl pointer-events-none" />
+           
 
             {/* Content — offset by top bar height */}
             <div className="flex flex-col justify-center flex-1 px-8 pt-16 pb-12">
@@ -169,14 +184,14 @@ function MobileNav({ pathname }: { pathname: string }) {
                 className="space-y-2"
               >
                 {navLinks.map(({ href, label, icon: Icon }) => {
-                  const active = pathname === href
+                  const active = href === '/' ? pathname === '/' : pathname === href
                   return (
                     <motion.li key={href} variants={itemVariants}>
                       <Link
                         href={href}
                         onClick={() => setOpen(false)}
-                        className={`group flex items-center gap-4 px-5 py-4 rounded-2xl transition-colors ${
-                          active ? 'bg-white/8 text-accent-golden' : 'text-white/60 hover:text-white hover:bg-white/5'
+                        className={`group relative flex items-center gap-4 px-5 py-4 rounded-2xl transition-colors overflow-hidden ${
+                          active ? 'bg-white/8 text-accent-golden font-semibold' : 'text-white/60 hover:text-white hover:bg-white/5'
                         }`}
                       >
                         <span className={`flex items-center justify-center w-10 h-10 rounded-xl ${
@@ -186,6 +201,21 @@ function MobileNav({ pathname }: { pathname: string }) {
                         </span>
                         <span className="text-xl font-semibold tracking-tight">{label}</span>
                         <ChevronRight className={`ml-auto w-5 h-5 transition-transform group-hover:translate-x-1 ${active ? 'text-accent-golden/60' : 'text-white/20'}`} />
+                        {active && (
+                          <>
+                            <motion.span
+                              layoutId="mobile-nav-bar"
+                              className="absolute left-0 top-3 bottom-3 w-[3px] rounded-full bg-accent-golden"
+                              transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                            />
+                            <motion.span
+                              className="absolute left-0 top-3 bottom-3 w-[3px] rounded-full bg-accent-golden"
+                              animate={{ opacity: [0.5, 1, 0.5], scaleY: [0.8, 1, 0.8] }}
+                              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+                              style={{ filter: 'blur(4px)' }}
+                            />
+                          </>
+                        )}
                       </Link>
                     </motion.li>
                   )
@@ -196,7 +226,7 @@ function MobileNav({ pathname }: { pathname: string }) {
                   <Link
                     href="/login"
                     onClick={() => setOpen(false)}
-                    className="flex items-center justify-center gap-3 w-full px-5 py-4 rounded-2xl text-base font-semibold text-brand-deepCanopy bg-accent-golden hover:bg-accent-yellow transition-colors shadow-[0_0_40px_rgba(199,148,62,0.35)]"
+                    className="flex items-center justify-center gap-3 w-full px-5 py-4 rounded-sm text-base font-semibold text-green-900 bg-white  hover:bg-accent-yellow transition-colors "
                   >
                     <LogIn className="w-5 h-5" />
                     Sign In
@@ -209,7 +239,7 @@ function MobileNav({ pathname }: { pathname: string }) {
                 variants={itemVariants}
                 className="text-center text-xs text-white/20 mt-12"
               >
-                Ghana Land Administration System
+                Ghana Land Administration 
               </motion.p>
             </div>
           </motion.div>
@@ -226,7 +256,7 @@ export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12)
+    const onScroll = () => setScrolled(window.scrollY > 8)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
