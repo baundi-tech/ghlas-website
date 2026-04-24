@@ -10,7 +10,7 @@ const workflows = [
     description: 'Fill registration form and upload required documents including proof of ownership',
     icon: Upload,
     role: 'Land Owner',
-    color: 'from-blue-500 to-cyan-500'
+    color: 'from-brand-darkForest to-brand-forest'
   },
   {
     step: 2,
@@ -18,7 +18,7 @@ const workflows = [
     description: 'Licensed surveyor submits GPS boundary data and certifies parcel dimensions',
     icon: Users,
     role: 'Licensed Surveyor',
-    color: 'from-purple-500 to-pink-500'
+    color: 'from-brand-darkForest to-brand-forest'
   },
   {
     step: 3,
@@ -26,7 +26,7 @@ const workflows = [
     description: 'Registration officer verifies documents, runs overlap detection, and validates data',
     icon: FileSearch,
     role: 'Registration Officer',
-    color: 'from-orange-500 to-red-500'
+    color: 'from-brand-darkForest to-brand-forest'
   },
   {
     step: 4,
@@ -34,7 +34,7 @@ const workflows = [
     description: 'Senior officer conducts final checks and conflict resolution',
     icon: ClipboardCheck,
     role: 'Senior Officer',
-    color: 'from-teal-500 to-green-500'
+    color: 'from-brand-darkForest to-brand-forest'
   },
   {
     step: 5,
@@ -42,13 +42,13 @@ const workflows = [
     description: 'Registrar approves, issues digital title, and records on blockchain',
     icon: CheckCircle,
     role: 'Registrar',
-    color: 'from-accent-golden to-orange-500'
+    color: 'from-brand-darkForest to-brand-forest'
   }
 ]
 
 export function WorkflowSection() {
   return (
-    <section className="py-24 bg-neutral-white">
+    <section className="py-10 bg-neutral-white">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -59,14 +59,14 @@ export function WorkflowSection() {
           <h2 className="text-4xl lg:text-5xl font-bold text-brand-darkForest mb-4">
             Registration Workflow
           </h2>
-          <p className="text-xl text-brand-muted max-w-3xl mx-auto">
+          <p className="text-md text-brand-muted max-w-3xl mx-auto">
             Streamlined 5-step process from application to secure ownership, ensuring transparency at every stage
           </p>
         </motion.div>
 
         <div className="relative">
           {/* Connection Line */}
-          <div className="absolute top-24 left-0 right-0 h-1 bg-gradient-to-r from-brand-leaf via-accent-golden to-brand-leaf hidden lg:block" />
+          <div className="absolute top-24 left-0 right-0 h-1 bg-gradient-to-r from-brand-darkForest via-brand-forest to-brand-darkForest hidden lg:block" />
           
           <div className="grid lg:grid-cols-5 gap-6 relative">
             {workflows.map((workflow, index) => (
@@ -101,7 +101,7 @@ export function WorkflowSection() {
                   </p>
                   
                   {/* Role Badge */}
-                  <span className="inline-block px-3 py-1 bg-gradient-to-r from-brand-leaf/10 to-accent-golden/10 text-brand-darkForest text-xs rounded-full font-medium">
+                  <span className="inline-block px-3 py-1 bg-gradient-to-r from-brand-darkForest/10 to-brand-forest/10 text-brand-darkForest text-xs rounded-full font-medium">
                     {workflow.role}
                   </span>
                 </div>
@@ -117,13 +117,7 @@ export function WorkflowSection() {
           </div>
         </div>
         
-        {/* Timeline Indicator */}
-        <div className="mt-12 text-center">
-          <div className="inline-flex items-center gap-2 text-sm text-brand-muted">
-            <Award className="w-4 h-4 text-accent-golden" />
-            <span>Average processing time: 5-7 business days</span>
-          </div>
-        </div>
+        
       </div>
     </section>
   )

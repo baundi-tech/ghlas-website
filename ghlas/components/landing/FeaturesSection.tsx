@@ -93,7 +93,7 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section className="py-24 bg-neutral-paleMint">
+    <section className="py-10 bg-neutral-paleMint">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -104,7 +104,7 @@ export function FeaturesSection() {
           <h2 className="text-4xl lg:text-5xl font-bold text-brand-darkForest mb-4">
             Powerful Features
           </h2>
-          <p className="text-xl text-brand-muted max-w-3xl mx-auto">
+          <p className="text-md text-brand-muted max-w-3xl mx-auto">
             Everything you need to manage land records securely and efficiently in one unified platform
           </p>
         </motion.div>

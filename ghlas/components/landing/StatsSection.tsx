@@ -10,42 +10,42 @@ const stats = [
     value: 250000,
     label: 'Registered Landowners',
     suffix: '+',
-    color: 'from-blue-500 to-cyan-500'
+    color: 'from-accent-golden to-accent-yellow'
   },
   {
     icon: FileText,
     value: 500000,
     label: 'Digital Records',
     suffix: '+',
-    color: 'from-purple-500 to-pink-500'
+    color: 'from-accent-golden to-accent-yellow'
   },
   {
     icon: MapPin,
     value: 16,
     label: 'Regions Covered',
     suffix: '',
-    color: 'from-green-500 to-emerald-500'
+    color: 'from-accent-golden to-accent-yellow'
   },
   {
     icon: CheckCircle,
     value: 98,
     label: 'Dispute Resolution Rate',
     suffix: '%',
-    color: 'from-accent-golden to-orange-500'
+    color: 'from-accent-golden to-accent-yellow'
   },
   {
     icon: Building,
     value: 260,
     label: 'Districts Active',
     suffix: '+',
-    color: 'from-red-500 to-orange-500'
+    color: 'from-accent-golden to-accent-yellow'
   },
   {
     icon: TrendingUp,
     value: 150,
     label: 'Efficiency Increase',
     suffix: '%',
-    color: 'from-teal-500 to-green-500'
+    color: 'from-accent-golden to-accent-yellow'
   }
 ]
 
@@ -79,7 +79,7 @@ function Counter({ end, duration = 2000 }: { end: number; duration?: number }) {
 
 export function StatsSection() {
   return (
-    <section className="py-24 bg-gradient-to-br from-brand-darkForest via-brand-forest to-brand-deepCanopy relative overflow-hidden">
+    <section className="py-10 bg-gradient-to-br from-brand-darkForest via-brand-forest to-brand-deepCanopy relative overflow-hidden">
       {/* Animated background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -98,7 +98,7 @@ export function StatsSection() {
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
             Our Impact So Far
           </h2>
-          <p className="text-xl text-neutral-sage max-w-2xl mx-auto">
+          <p className="text-xl text-white/70 max-w-2xl mx-auto">
             Transforming land administration across Ghana with measurable results
           </p>
         </motion.div>
@@ -112,8 +112,8 @@ export function StatsSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="text-center text-white"
             >
-              <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${stat.color} bg-opacity-20 mb-4`}>
-                <stat.icon className="w-8 h-8 text-accent-golden" />
+              <div className={`inline-flex p-4 rounded-md bg-gradient-to-br ${stat.color} bg-opacity-20 mb-4`}>
+                <stat.icon className="w-8 h-8 text-brand-darkForest" />
               </div>
               <div className="text-4xl font-bold mb-2">
                 <Counter end={stat.value} />

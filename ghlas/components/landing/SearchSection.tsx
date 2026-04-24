@@ -11,7 +11,7 @@ export function SearchSection() {
   const router = useRouter()
 
   const searchOptions = [
-    { id: 'owner', label: 'Owner Name', icon: User, placeholder: 'e.g., John Mensah' },
+    { id: 'owner', label: 'Name', icon: User, placeholder: 'e.g., John Mensah' },
     { id: 'ghanaCard', label: 'GhanaCard Number', icon: CreditCard, placeholder: 'e.g., GHA-123456789-1' },
     { id: 'location', label: 'Map Location', icon: MapPin, placeholder: 'e.g., Coordinates or address' },
     { id: 'district', label: 'District', icon: Building, placeholder: 'e.g., Accra Metropolitan' },
@@ -30,7 +30,7 @@ export function SearchSection() {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-b from-neutral-white to-neutral-paleMint">
+    <section className="py-10 bg-gradient-to-b from-neutral-white to-neutral-paleMint">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -41,7 +41,7 @@ export function SearchSection() {
           <h2 className="text-4xl lg:text-5xl font-bold text-brand-darkForest mb-4">
             Search Land Parcels
           </h2>
-          <p className="text-xl text-brand-muted max-w-2xl mx-auto">
+          <p className="text-sm text-brand-muted max-w-2xl mx-auto">
             Instantly verify land ownership and search by owner name, GhanaCard number, 
             location on map, or district
           </p>
@@ -56,7 +56,7 @@ export function SearchSection() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSearchType(option.id)}
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-full transition-all duration-200 ${
+                className={`flex items-center gap-2 px-6 py-2.5 rounded-md transition-all duration-200 cursor-pointer ${
                   searchType === option.id
                     ? 'bg-brand-darkForest text-white shadow-lg'
                     : 'bg-neutral-white text-brand-muted hover:bg-brand-sage/20'
@@ -70,8 +70,8 @@ export function SearchSection() {
 
           {/* Search Input */}
           <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-leaf to-accent-golden rounded-xl blur opacity-0 group-hover:opacity-25 transition-opacity duration-300" />
-            <div className="relative bg-white rounded-xl shadow-xl">
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-leaf to-accent-golden rounded-md blur opacity-0 group-hover:opacity-25 transition-opacity duration-300" />
+            <div className="relative bg-white rounded-xl shadow-md">
               <input
                 type="text"
                 value={searchQuery}
@@ -82,7 +82,7 @@ export function SearchSection() {
               />
               <button
                 onClick={handleSearch}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 btn-accent inline-flex items-center gap-2"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 btn-accent inline-flex cursor-pointer items-center gap-2"
               >
                 <Search className="w-5 h-5" />
                 <span className="hidden sm:inline">Search</span>

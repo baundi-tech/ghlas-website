@@ -90,10 +90,10 @@
   }
   
   .btn-accent {
-    background-color: var(--color-accent-golden);
+    background-color: var(--color-brand-darkForest);
     color: var(--color-brand-deepCanopy);
     padding: 0.625rem 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.3rem;
     transition: all 0.2s;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     font-weight: 500;
@@ -106,7 +106,7 @@
   
   .card {
     background-color: var(--color-neutral-white);
-    border-radius: 0.75rem;
+    border-radius: 0.35rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     padding: 1.5rem;
     transition: box-shadow 0.3s;
