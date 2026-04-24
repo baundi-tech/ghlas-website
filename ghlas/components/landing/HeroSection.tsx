@@ -44,22 +44,22 @@ export function HeroSection() {
           >
             
             
-            <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               Secure Your Land
               <span className="text-accent-golden"> Ownership</span>
             </h1>
             
-            <p className="text-xl text-white/80 mb-8 leading-relaxed">
+            <p className="text-lg text-white/80 mb-8 leading-relaxed">
               Ghana's premier digital land administration system. Eliminate disputes, 
               verify ownership and secure your property rights with blockchain-backed technology.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/search" className="btn-accent inline-flex items-center gap-2 group">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+              <Link href="/search" className="btn-accent w-full sm:w-auto inline-flex items-center justify-center text-center gap-2 px-4 py-3 text-sm sm:text-base group">
                 Search Parcels
                 <Search className="w-4 h-4 group-hover:scale-110 transition-transform" />
               </Link>
-              <Link href="/register" className="btn-secondary border-white text-white hover:bg-white hover:text-brand-darkForest inline-flex items-center gap-2 group">
+              <Link href="/register" className="btn-secondary w-full sm:w-auto border-white text-white hover:bg-white hover:text-brand-darkForest inline-flex items-center justify-center gap-2 px-4 py-3 text-sm sm:text-base group">
                 Register Land
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -74,7 +74,7 @@ export function HeroSection() {
                 <MapPin className="w-5 h-5 text-accent-golden" />
                 <span>GPS Verified</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="hidden sm:flex items-center gap-2">
                 <div className="flex -space-x-2">
                   {[1, ].map((i) => (
                     <div key={i} className="w-8 h-8 rounded-full bg-accent-golden/30 border-2 border-white flex items-center justify-center">

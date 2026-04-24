@@ -125,7 +125,7 @@ function MobileNav({ pathname }: { pathname: string }) {
   return (
     <>
       {/* Top bar — always visible on mobile */}
-      <div className="flex md:hidden items-center justify-between h-16 px-5 bg-brand-deepCanopy/85 backdrop-blur-xl border-b border-white/8 relative z-50">
+      <div className="flex md:hidden items-center justify-between h-18 px-5 bg-brand-deepCanopy backdrop-blur-xl border-b border-white/8 relative z-50">
         <Link href="/" onClick={() => setOpen(false)}>
           <Image src="/images/logo.png" alt="GHLAS" width={120} height={32} priority />
         </Link>
