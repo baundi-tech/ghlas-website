@@ -17,11 +17,11 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
               <img
-                src="/images/logo.png"
+                src="/images/logo1.png"
                 alt="GHLAS Logo"
                 className="h-10 w-auto object-contain"
               />
-              <span className="font-bold text-xl">GHLAS</span>
+            
             </div>
             <p className="text-neutral-sage text-sm">
               Ghana's premier digital land administration system, securing land ownership and eliminating disputes through blockchain technology.

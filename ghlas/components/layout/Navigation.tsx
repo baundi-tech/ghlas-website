@@ -25,15 +25,45 @@ function DesktopNav({ pathname, scrolled }: { pathname: string; scrolled: boolea
           : 'bg-transparent'
       }`}
     >
-      {/* Left — Logo */}
-      <Link href="/" className="flex-shrink-0">
-        <Image
-          src="/images/logo.png"
-          alt="GHLAS"
-          width={140}
-          height={36}
-          priority
-        />
+      {/* Left — Logo (crossfades on scroll) */}
+      <Link href="/" className="flex-shrink-0 relative w-[140px] h-[36px]">
+        <AnimatePresence mode="wait" initial={false}>
+          {scrolled ? (
+            <motion.span
+              key="logo-scrolled"
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 6 }}
+              transition={{ duration: 0.25 }}
+              className="absolute inset-0"
+            >
+              <Image
+                src="/images/logo1.png"
+                alt="GHLAS"
+                fill
+                className="object-contain object-left"
+                priority
+              />
+            </motion.span>
+          ) : (
+            <motion.span
+              key="logo-default"
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 6 }}
+              transition={{ duration: 0.25 }}
+              className="absolute inset-0"
+            >
+              <Image
+                src="/images/logo.png"
+                alt="GHLAS"
+                fill
+                className="object-contain object-left"
+                priority
+              />
+            </motion.span>
+          )}
+        </AnimatePresence>
       </Link>
 
       {/* Right — Nav links + CTA */}
