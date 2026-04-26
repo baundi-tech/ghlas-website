@@ -38,7 +38,7 @@ export function VideoBannerSection() {
 
           <p className="text-sm sm:text-base md:text-lg text-white/80 mb-6">
             From the Northern Savanna to the Volta Basin, GHLAS brings
-            transparent, blockchain-backed land rights to all 16 regions.
+            transparent, government-certified land rights to all 16 regions.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">

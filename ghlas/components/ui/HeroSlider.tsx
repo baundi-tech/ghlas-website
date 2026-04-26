@@ -6,11 +6,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const slides = [
-  { src: '/images/1.png', alt: 'Disagreement — land dispute begins' },
-  { src: '/images/2.png', alt: 'Mediation — neutral ground is found' },
-  { src: '/images/3.png', alt: 'Understanding — records are reviewed together' },
-  { src: '/images/4.png', alt: 'Agreement — both parties reach a resolution' },
-  { src: '/images/5.png', alt: 'Handshake — ownership is confirmed' },
+  { src: '/images/a.png', alt: 'Disagreement — land dispute begins' },
+  { src: '/images/b.png', alt: 'Mediation — neutral ground is found' },
+  { src: '/images/c.png', alt: 'Understanding — records are reviewed together' },
+  { src: '/images/d.png', alt: 'Agreement — both parties reach a resolution' },
+  { src: '/images/e.png', alt: 'Handshake — ownership is confirmed' },
   { src: '/images/6.png', alt: 'Unity — community land rights secured' },
 ]
 
@@ -43,7 +43,7 @@ export function HeroSlider() {
   }, [])
 
   return (
-    <div className="relative h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+    <div className="relative h-[500px] w-full rounded-sm overflow-hidden shadow-sm">
       <AnimatePresence custom={dir} mode="wait">
         <motion.div
           key={index}

@@ -24,7 +24,7 @@ const scenes = [
   {
     id: 3,
     title: "Evidence Presented",
-    description: "Blockchain records verify ownership",
+    description: "Official title deed records verify ownership",
     icon: Shield,
     action: "verifying",
     color: "from-green-500/20 to-emerald-500/20"

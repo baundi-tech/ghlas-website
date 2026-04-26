@@ -39,7 +39,7 @@ const workflows = [
   {
     step: 5,
     title: 'Final Approval',
-    description: 'Registrar approves, issues digital title, and records on blockchain',
+    description: 'Registrar approves, issues a certified digital title deed, and records it in the national land registry',
     icon: CheckCircle,
     role: 'Registrar',
     color: 'from-brand-darkForest to-brand-forest'

@@ -1,56 +1,100 @@
 'use client'
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import 'leaflet/dist/leaflet.css'
+import { useEffect } from 'react'
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
+import { fmtCoords, type LandRecord } from '@/lib/land-records'
 
-// Fix default marker icon broken by webpack
-delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+// ── icons ──────────────────────────────────────────────────────────────────────
+const defaultIcon = L.icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34],
 })
 
-interface LandParcel {
-  id?: string
-  parcelId?: string
-  owner?: string
-  location?: string
-  lat?: number
-  lng?: number
+const activeIcon = L.icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34],
+})
+
+// ── fly-to controller (only fires when selected changes, not on mount) ─────────
+function FlyToSelected({ selected }: { selected: LandRecord | null }) {
+  const map = useMap()
+  useEffect(() => {
+    if (!selected || isNaN(selected.lat) || isNaN(selected.lng)) return
+    map.flyTo([selected.lat, selected.lng], 14, { duration: 1.0 })
+  }, [selected, map])
+  return null
 }
 
-interface MapComponentProps {
-  results: LandParcel[]
+// ── status badge colours ───────────────────────────────────────────────────────
+const statusColor: Record<string, string> = {
+  registered: '#16a34a',
+  pending:    '#d97706',
+  disputed:   '#dc2626',
+  transferred:'#2563eb',
 }
 
-export default function MapComponent({ results }: MapComponentProps) {
+interface Props {
+  results:    LandRecord[]
+  selected:   LandRecord | null
+  onSelect:   (r: LandRecord) => void
+  mapCenter:  [number, number]
+  mapZoom:    number
+}
+
+export default function MapComponent({ results, selected, onSelect, mapCenter, mapZoom }: Props) {
   return (
-    <div className="w-full h-[400px] rounded-xl overflow-hidden mb-6 shadow-md">
+    <div className="relative w-full h-full">
       <MapContainer
-        center={[7.9465, -1.0232]}
-        zoom={7}
-        className="w-full h-full"
+        key={`${mapCenter[0]},${mapCenter[1]},${mapZoom}`}
+        center={mapCenter}
+        zoom={mapZoom}
+        scrollWheelZoom
+        style={{ width: '100%', height: '100%' }}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {results.map((parcel, i) => (
-          parcel.lat && parcel.lng && (
-            <Marker key={parcel.id ?? i} position={[parcel.lat, parcel.lng]}>
-              <Popup>
-                <div className="text-sm">
-                  <p className="font-semibold">{parcel.parcelId ?? `Parcel ${i + 1}`}</p>
-                  {parcel.owner && <p>{parcel.owner}</p>}
-                  {parcel.location && <p>{parcel.location}</p>}
-                </div>
-              </Popup>
-            </Marker>
-          )
+
+        <FlyToSelected selected={selected} />
+
+        {results.map(r => (
+          <Marker
+            key={r.id}
+            position={[r.lat, r.lng]}
+            icon={selected?.id === r.id ? activeIcon : defaultIcon}
+            eventHandlers={{ click: () => onSelect(r) }}
+          >
+            <Popup>
+              <div className="text-sm min-w-[180px]">
+                <p className="font-semibold text-gray-900">{r.name}</p>
+                <p className="text-gray-500 text-xs mt-0.5">{r.district}, {r.region}</p>
+                <p className="text-gray-500 text-xs">Parcel: <span className="font-mono">{r.id}</span></p>
+                <p className="text-gray-500 text-xs">Area: {r.area} · {r.title}</p>
+                <p className="text-xs font-mono mt-1" style={{ color: statusColor[r.status] ?? '#555' }}>
+                  {fmtCoords(r.lat, r.lng)}
+                </p>
+                <span className="inline-block mt-1 text-xs px-2 py-0.5 rounded-full font-medium"
+                  style={{ background: `${statusColor[r.status] ?? '#888'}22`, color: statusColor[r.status] ?? '#555' }}>
+                  {r.status}
+                </span>
+              </div>
+            </Popup>
+          </Marker>
         ))}
       </MapContainer>
+
+      {/* Coordinates overlay */}
+      {selected && (
+        <div className="absolute bottom-3 left-3 z-[500] bg-gray-900/80 backdrop-blur-sm text-white rounded-lg px-3 py-2 text-xs pointer-events-none">
+          <span className="opacity-70">Selected · </span>
+          <span className="font-mono text-yellow-400">{fmtCoords(selected.lat, selected.lng)}</span>
+        </div>
+      )}
     </div>
   )
 }

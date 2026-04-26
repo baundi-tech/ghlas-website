@@ -24,7 +24,7 @@ export function Footer() {
             
             </div>
             <p className="text-neutral-sage text-sm">
-              Ghana's premier digital land administration system, securing land ownership and eliminating disputes through blockchain technology.
+              Ghana's premier digital land administration system, securing land ownership and eliminating disputes through the official Lands Commission registry.
             </p>
           </div>
 

@@ -1,26 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { 
-  Shield, 
-  FileCheck, 
-  MapPin, 
-  Bell, 
-  BarChart3, 
-  Users,
-  Database,
-  Lock,
-  Clock,
-  Globe,
-  Smartphone,
-  Award
-} from 'lucide-react'
+import { Shield, FileCheck, MapPin, Bell, Lock, Users } from 'lucide-react'
 
 const features = [
   {
     icon: Shield,
-    title: 'Blockchain Secured',
-    description: 'Immutable audit trail ensuring transparent and tamper-proof land records',
+    title: 'Title Deed Registry',
+    description: 'Tamper-proof government-issued title deeds backed by the Lands Commission of Ghana',
     color: 'text-brand-leaf'
   },
   {
@@ -42,53 +29,17 @@ const features = [
     color: 'text-accent-orange'
   },
   {
-    icon: BarChart3,
-    title: 'Analytics Dashboard',
-    description: 'Comprehensive reporting for regional directors and stakeholders',
-    color: 'text-brand-leaf'
+    icon: Lock,
+    title: 'Secure Ownership',
+    description: 'Verified ownership through GhanaCard integration',
+    color: 'text-accent-golden'
   },
   {
     icon: Users,
     title: 'Multi-role Access',
     description: 'Role-based access for public, owners, surveyors, and officers',
-    color: 'text-accent-golden'
-  },
-  {
-    icon: Database,
-    title: 'Digital Records',
-    description: 'Complete digitization of land records and historical documents',
     color: 'text-brand-leaf'
   },
-  {
-    icon: Lock,
-    title: 'Secure Ownership',
-    description: 'Verified ownership through GhanaCard integration',
-    color: 'text-accent-orange'
-  },
-  {
-    icon: Clock,
-    title: 'Fast Processing',
-    description: 'Reduce registration time from months to days',
-    color: 'text-brand-leaf'
-  },
-  {
-    icon: Globe,
-    title: 'Accessible Anywhere',
-    description: 'Access land records from anywhere, anytime',
-    color: 'text-accent-golden'
-  },
-  {
-    icon: Smartphone,
-    title: 'Mobile Ready',
-    description: 'Fully responsive progressive web application',
-    color: 'text-brand-leaf'
-  },
-  {
-    icon: Award,
-    title: 'Government Approved',
-    description: 'Officially recognized land administration system',
-    color: 'text-accent-orange'
-  }
 ]
 
 export function FeaturesSection() {
@@ -109,7 +60,7 @@ export function FeaturesSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <motion.div
               key={index}

@@ -51,7 +51,7 @@ export function HeroSection() {
             
             <p className="text-lg text-white/80 mb-8 leading-relaxed">
               Ghana's premier digital land administration system. Eliminate disputes, 
-              verify ownership and secure your property rights with blockchain-backed technology.
+              verify ownership and secure your property rights through Ghana's official Lands Commission registry.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
@@ -68,7 +68,7 @@ export function HeroSection() {
             <div className="mt-12 flex flex-wrap items-center gap-8 text-white">
               <div className="flex items-center gap-2">
                 <Shield className="w-5 h-5 text-accent-golden" />
-                <span>Blockchain Secured</span>
+                <span>Title Deed Certified</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-5 h-5 text-accent-golden" />

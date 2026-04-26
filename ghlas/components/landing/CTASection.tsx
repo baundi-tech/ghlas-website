@@ -50,7 +50,7 @@ export function CTASection() {
           <div className="grid sm:grid-cols-3 gap-6 pt-8 border-t border-neutral-coolGray">
             <div className="flex items-center justify-center gap-2 text-brand-muted">
               <Shield className="w-5 h-5 text-accent-golden" />
-              <span>Blockchain Secured</span>
+              <span>Title Deed Certified</span>
             </div>
             <div className="flex items-center justify-center gap-2 text-brand-muted">
               <Clock className="w-5 h-5 text-accent-golden" />
