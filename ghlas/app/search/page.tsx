@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Search, MapPin, User, CreditCard, Building, X, ChevronRight,
   AlertCircle, CheckCircle2, Users, Calendar, Ruler,
-  LayoutList, Map, ExternalLink, SlidersHorizontal,
+  ExternalLink, SlidersHorizontal,
   ArrowLeft, Shield, Hash, Layers, Globe, ChevronDown,
 } from 'lucide-react'
 import { RECORDS, DISTRICT_COORDS, searchRecords, fmtCoords, type LandRecord } from '@/lib/land-records'
@@ -248,11 +248,6 @@ function SearchContent() {
   const [query,      setQuery]      = useState(initQ)
   const [results,    setResults]    = useState<LandRecord[]>(initHits)
   const [selected,   setSelected]   = useState<LandRecord | null>(initSelected)
-  const [mobileView,   setMobileView]   = useState<'search' | 'map'>('search')
-  const [mapRenderKey, setMapRenderKey] = useState(0)
-
-  const goToMap = () => { setMobileView('map'); setMapRenderKey(k => k + 1) }
-
   // map
   const [mapCenter, setMapCenter] = useState<[number, number]>(initCenter)
   const [mapZoom,   setMapZoom]   = useState(initZoom)
@@ -291,7 +286,6 @@ function SearchContent() {
     setSelected(r); setDuplicateGroup([]); setNameSuggestions([])
     setQuery(r.name)
     setMapCenter([r.lat, r.lng]); setMapZoom(14)
-    goToMap()
   }
 
   const handleFilterSwitch = (id: string) => { setFilter(id); setQuery(''); resetAll() }
@@ -378,7 +372,7 @@ function SearchContent() {
 
   // ─────────────────────────────────────────────────────────────────────────────
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-neutral-paleMint">
+    <div className="flex flex-col lg:h-screen lg:overflow-hidden bg-neutral-paleMint">
 
       {/* ═══════════════ TOP NAV BAR ════════════════════════════════════════════ */}
       <header className="flex-shrink-0 bg-brand-deepCanopy text-white relative z-[600] shadow-lg">
@@ -445,32 +439,15 @@ function SearchContent() {
           )}
         </div>
 
-        {/* Mobile Results / Map toggle */}
-        <div className="lg:hidden flex border-t border-white/10">
-          {(['search', 'map'] as const).map(tab => (
-            <button key={tab} onClick={() => setMobileView(tab)}
-              className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold transition-colors ${
-                mobileView === tab ? 'bg-white/10 text-white' : 'text-white/50 hover:text-white'
-              }`}
-            >
-              {tab === 'search'
-                ? <><LayoutList className="w-4 h-4" /> Results {results.length > 0 && <span className="bg-accent-golden text-brand-deepCanopy rounded-full px-1.5 py-0.5 text-[10px] font-bold ml-1">{displayed.length}</span>}</>
-                : <><Map className="w-4 h-4" /> Map {selected && <span className="bg-accent-golden text-brand-deepCanopy rounded-full px-1.5 py-0.5 text-[10px] font-bold ml-1">1</span>}</>
-              }
-            </button>
-          ))}
-        </div>
       </header>
 
-      {/* ═══════════════ BODY (sidebar + map) ══════════════════════════════════ */}
-      <div className="flex flex-1 overflow-hidden">
+      {/* ═══════════════ BODY ═══════════════════════════════════════════════════ */}
+      {/* Mobile: single scrollable column (results → map card below)            */}
+      {/* Desktop: fixed-height two-column split (left panel + full-height map)  */}
+      <div className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden">
 
         {/* ── LEFT PANEL ────────────────────────────────────────────────────── */}
-        <div className={`
-          ${mobileView === 'search' ? 'flex' : 'hidden'} lg:flex
-          flex-col w-full lg:w-[420px] xl:w-[460px] flex-shrink-0
-          bg-white border-r border-neutral-200 overflow-hidden
-        `}>
+        <div className="flex flex-col w-full lg:w-[420px] xl:w-[460px] lg:flex-shrink-0 bg-white lg:border-r lg:border-neutral-200 lg:overflow-hidden">
 
           {/* Flow UI (suggestions, location picker, etc.) */}
           <div className="flex-shrink-0 border-b border-neutral-100">
@@ -695,8 +672,8 @@ function SearchContent() {
             </div>
           )}
 
-          {/* Results list — scrollable */}
-          <div className="flex-1 overflow-y-auto">
+          {/* Results list — scrollable on desktop, natural flow on mobile */}
+          <div className="lg:flex-1 lg:overflow-y-auto">
             {displayed.length === 0
               ? <EmptyState hasQuery={hasQuery} />
               : (
@@ -710,7 +687,6 @@ function SearchContent() {
                         setSelected(r)
                         setMapCenter([r.lat, r.lng])
                         setMapZoom(14)
-                        goToMap()
                       }}
                     />
                   ))}
@@ -718,16 +694,31 @@ function SearchContent() {
               )
             }
           </div>
+
+          {/* Mobile map card — sits below results, hidden on desktop */}
+          <div className="lg:hidden px-4 pb-6 pt-2">
+            <div className="relative w-full rounded-2xl overflow-hidden isolate shadow-lg border border-neutral-200" style={{ height: 320 }}>
+              <MapComponent
+                results={displayed}
+                selected={selected}
+                onSelect={r => { setSelected(r); setMapCenter([r.lat, r.lng]); setMapZoom(14) }}
+                mapCenter={mapCenter}
+                mapZoom={mapZoom}
+              />
+              {selected && (
+                <div className="absolute bottom-3 left-3 z-[500] bg-gray-900/80 backdrop-blur-sm text-white rounded-lg px-3 py-2 text-xs pointer-events-none">
+                  <span className="opacity-70">Selected · </span>
+                  <span className="font-mono text-yellow-400">{fmtCoords(selected.lat, selected.lng)}</span>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
-        {/* ── MAP PANEL ──────────────────────────────────────────────────────── */}
-        <div className={`
-          ${mobileView === 'map' ? 'flex' : 'hidden'} lg:flex
-          flex-1 relative overflow-hidden isolate
-        `}>
+        {/* ── MAP PANEL — desktop only ───────────────────────────────────────── */}
+        <div className="hidden lg:flex flex-1 relative overflow-hidden isolate">
           <div className="absolute inset-0">
             <MapComponent
-              key={mapRenderKey}
               results={displayed}
               selected={selected}
               onSelect={r => { setSelected(r); setMapCenter([r.lat, r.lng]); setMapZoom(14) }}
@@ -765,12 +756,6 @@ function SearchContent() {
             </div>
           )}
 
-          {/* Mobile: back to results — bottom-centre so it never overlaps top overlays */}
-          <button onClick={() => setMobileView('search')}
-            className="lg:hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-[500] flex items-center gap-2 bg-white/95 backdrop-blur-sm border border-neutral-200 shadow-lg rounded-full px-5 py-2.5 text-sm font-semibold text-brand-darkForest"
-          >
-            <LayoutList className="w-4 h-4" /> Back to results
-          </button>
         </div>
 
       </div>
