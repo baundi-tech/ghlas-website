@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const slides = [
-  { src: '/images/a.png', alt: 'Disagreement — land dispute begins' },
-  { src: '/images/b.png', alt: 'Mediation — neutral ground is found' },
-  { src: '/images/c.png', alt: 'Understanding — records are reviewed together' },
-  { src: '/images/d.png', alt: 'Agreement — both parties reach a resolution' },
-  { src: '/images/e.png', alt: 'Handshake — ownership is confirmed' },
-  { src: '/images/f.png', alt: 'Unity — community land rights secured' },
+  { src: '/images/1.png', alt: '' },
+  { src: '/images/2.png', alt: 'Mediation — neutral ground is found' },
+  { src: '/images/3.png', alt: 'Understanding — records are reviewed together' },
+  { src: '/images/4.png', alt: 'Agreement — both parties reach a resolution' },
+  { src: '/images/5.png', alt: 'Handshake — ownership is confirmed' },
+  { src: '/images/6.png', alt: 'Unity — community land rights secured' },
 ]
 
 const variants = {
