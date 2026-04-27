@@ -167,7 +167,7 @@ function MapInfoCard({ record, onClose }: { record: LandRecord; onClose: () => v
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 12 }}
-      className="absolute bottom-6 left-4 right-4 sm:left-6 sm:right-auto sm:w-80 z-[500] bg-white rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden"
+      className="absolute bottom-20 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-auto sm:w-80 z-[500] bg-white rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden"
     >
       {/* Header */}
       <div className="bg-brand-darkForest px-4 py-3 flex items-start justify-between">
@@ -248,7 +248,10 @@ function SearchContent() {
   const [query,      setQuery]      = useState(initQ)
   const [results,    setResults]    = useState<LandRecord[]>(initHits)
   const [selected,   setSelected]   = useState<LandRecord | null>(initSelected)
-  const [mobileView, setMobileView] = useState<'search' | 'map'>('search')
+  const [mobileView,   setMobileView]   = useState<'search' | 'map'>('search')
+  const [mapRenderKey, setMapRenderKey] = useState(0)
+
+  const goToMap = () => { setMobileView('map'); setMapRenderKey(k => k + 1) }
 
   // map
   const [mapCenter, setMapCenter] = useState<[number, number]>(initCenter)
@@ -288,7 +291,7 @@ function SearchContent() {
     setSelected(r); setDuplicateGroup([]); setNameSuggestions([])
     setQuery(r.name)
     setMapCenter([r.lat, r.lng]); setMapZoom(14)
-    setMobileView('map')
+    goToMap()
   }
 
   const handleFilterSwitch = (id: string) => { setFilter(id); setQuery(''); resetAll() }
@@ -378,7 +381,7 @@ function SearchContent() {
     <div className="flex flex-col h-screen overflow-hidden bg-neutral-paleMint">
 
       {/* ═══════════════ TOP NAV BAR ════════════════════════════════════════════ */}
-      <header className="flex-shrink-0 bg-brand-deepCanopy text-white z-40 shadow-lg">
+      <header className="flex-shrink-0 bg-brand-deepCanopy text-white relative z-[600] shadow-lg">
         {/* Top strip */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-white/10">
           <Link href="/" className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm">
@@ -707,7 +710,7 @@ function SearchContent() {
                         setSelected(r)
                         setMapCenter([r.lat, r.lng])
                         setMapZoom(14)
-                        setMobileView('map')
+                        goToMap()
                       }}
                     />
                   ))}
@@ -720,10 +723,11 @@ function SearchContent() {
         {/* ── MAP PANEL ──────────────────────────────────────────────────────── */}
         <div className={`
           ${mobileView === 'map' ? 'flex' : 'hidden'} lg:flex
-          flex-1 relative overflow-hidden
+          flex-1 relative overflow-hidden isolate
         `}>
           <div className="absolute inset-0">
             <MapComponent
+              key={mapRenderKey}
               results={displayed}
               selected={selected}
               onSelect={r => { setSelected(r); setMapCenter([r.lat, r.lng]); setMapZoom(14) }}
@@ -753,19 +757,19 @@ function SearchContent() {
             ))}
           </div>
 
-          {/* Result count badge */}
+          {/* Result count badge — desktop only (mobile shows count in tab) */}
           {displayed.length > 0 && (
-            <div className="absolute top-4 left-4 z-[500] bg-brand-deepCanopy/85 backdrop-blur-sm text-white rounded-xl px-3 py-2 shadow-md">
+            <div className="hidden sm:block absolute top-4 left-4 z-[500] bg-brand-deepCanopy/85 backdrop-blur-sm text-white rounded-xl px-3 py-2 shadow-md">
               <p className="text-xs font-bold">{displayed.length} parcel{displayed.length !== 1 ? 's' : ''} on map</p>
               {selected && <p className="text-[10px] text-accent-golden font-mono mt-0.5">{fmtCoords(selected.lat, selected.lng)}</p>}
             </div>
           )}
 
-          {/* Mobile: back to results button */}
+          {/* Mobile: back to results — bottom-centre so it never overlaps top overlays */}
           <button onClick={() => setMobileView('search')}
-            className="lg:hidden absolute top-4 left-1/2 -translate-x-1/2 z-[500] flex items-center gap-2 bg-white/90 backdrop-blur-sm border border-neutral-200 shadow-md rounded-full px-4 py-2 text-xs font-semibold text-brand-darkForest"
+            className="lg:hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-[500] flex items-center gap-2 bg-white/95 backdrop-blur-sm border border-neutral-200 shadow-lg rounded-full px-5 py-2.5 text-sm font-semibold text-brand-darkForest"
           >
-            <LayoutList className="w-3.5 h-3.5" /> Back to results
+            <LayoutList className="w-4 h-4" /> Back to results
           </button>
         </div>
 

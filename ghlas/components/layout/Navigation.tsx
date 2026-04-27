@@ -292,7 +292,7 @@ export function Navigation() {
   }, [])
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50">
+    <nav className="fixed top-0 left-0 right-0 z-[1100]">
       <DesktopNav pathname={pathname} scrolled={scrolled} />
       <MobileNav pathname={pathname} />
     </nav>

@@ -505,7 +505,7 @@ export function SearchSection() {
             </AnimatePresence>
 
             {/* Map — mobile (below controls) */}
-            <div className="lg:hidden rounded-2xl overflow-hidden border border-neutral-200 shadow-sm relative" style={{ height: 320 }}>
+            <div className="lg:hidden rounded-2xl overflow-hidden border border-neutral-200 shadow-sm relative isolate" style={{ height: 320 }}>
               <GhanaMap center={mapCenter} zoom={mapZoom} markerLabel={markerLabel} />
               {coordLabel && <CoordsBadge lat={coordLabel.lat} lng={coordLabel.lng} label={coordLabel.label} />}
             </div>
@@ -513,7 +513,7 @@ export function SearchSection() {
           </div>
 
           {/* ── RIGHT: map (desktop) ──────────────────────────────────── */}
-          <div className="hidden lg:block sticky top-24 rounded-2xl overflow-hidden border border-neutral-200 shadow-md relative" style={{ height: 520 }}>
+          <div className="hidden lg:block sticky top-24 rounded-2xl overflow-hidden border border-neutral-200 shadow-md relative isolate" style={{ height: 520 }}>
             <GhanaMap center={mapCenter} zoom={mapZoom} markerLabel={markerLabel} />
             {coordLabel && <CoordsBadge lat={coordLabel.lat} lng={coordLabel.lng} label={coordLabel.label} />}
           </div>

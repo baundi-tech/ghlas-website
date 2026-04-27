@@ -19,6 +19,17 @@ const activeIcon = L.icon({
   iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34],
 })
 
+// ── force Leaflet to recalculate its size after the container becomes visible ──
+function InvalidateOnMount() {
+  const map = useMap()
+  useEffect(() => {
+    map.invalidateSize()
+    const t = setTimeout(() => map.invalidateSize(), 150)
+    return () => clearTimeout(t)
+  }, [map])
+  return null
+}
+
 // ── fly-to controller (only fires when selected changes, not on mount) ─────────
 function FlyToSelected({ selected }: { selected: LandRecord | null }) {
   const map = useMap()
@@ -60,6 +71,7 @@ export default function MapComponent({ results, selected, onSelect, mapCenter, m
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
 
+        <InvalidateOnMount />
         <FlyToSelected selected={selected} />
 
         {results.map(r => (

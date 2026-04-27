@@ -96,6 +96,13 @@ export function HeroSection() {
             className="relative"
           >
             <HeroSlider />
+            {/* Edge vignettes — blend slider seamlessly into the dark hero bg */}
+            <div className="absolute inset-0 pointer-events-none z-10">
+              <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-brand-deepCanopy via-brand-deepCanopy/50 to-transparent" />
+              <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-brand-deepCanopy/70 to-transparent" />
+              <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-brand-deepCanopy via-brand-deepCanopy/40 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-brand-deepCanopy via-brand-deepCanopy/40 to-transparent" />
+            </div>
           </motion.div>
         </div>
       </div>
