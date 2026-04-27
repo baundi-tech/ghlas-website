@@ -11,7 +11,7 @@ const slides = [
   { src: '/images/c.png', alt: 'Understanding — records are reviewed together' },
   { src: '/images/d.png', alt: 'Agreement — both parties reach a resolution' },
   { src: '/images/e.png', alt: 'Handshake — ownership is confirmed' },
-  { src: '/images/6.png', alt: 'Unity — community land rights secured' },
+  { src: '/images/f.png', alt: 'Unity — community land rights secured' },
 ]
 
 const variants = {
